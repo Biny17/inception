@@ -1,0 +1,35 @@
+services:
+  wordpress:
+    build: ./wordpress
+    ports:
+      - "9000:9000"
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: wppassword
+
+  db:
+    build: ./mariadb
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wpuser
+      MARIADB_PASSWORD: wppassword
+      MARIADB_ROOT_PASSWORD: rootpassword
+    volumes:
+      - db_data:/var/lib/mysql
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_files:/var/www/html
+    depends_on:
+      - wordpress
+
+volumes:
+  db_data:
+  wordpress_files:
