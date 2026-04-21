@@ -1,8 +1,8 @@
 services:
   wordpress:
-    build: ./wordpress
-    ports:
-      - "9000:9000"
+    networks:
+      - agruet
+    build: ./requirements/wordpress
     depends_on:
       - db
     env_file: .env
@@ -17,9 +17,9 @@ services:
       - wordpress_files:/var/www/html
 
   db:
-    build: ./mariadb
-    ports:
-      - "3306:3306"
+    networks:
+      - agruet
+    build: ./requirements/mariadb
     env_file: .env
     environment:
       MARIADB_DATABASE: ${MARIADB_DATABASE}
@@ -33,13 +33,18 @@ services:
       - db_data:/var/lib/mysql
 
   nginx:
-    build: ./nginx
+    networks:
+      - agruet
+    build: ./requirements/nginx
     ports:
       - "443:443"
     volumes:
       - wordpress_files:/var/www/html
     depends_on:
       - wordpress
+    secrets:
+      - cert
+      - cert_key
 
 volumes:
   db_data:
@@ -47,6 +52,13 @@ volumes:
 
 secrets:
   db_password:
-    file: ./secrets/db_password.txt
+    file: ../secrets/db_password.txt
   db_root_password:
-    file: ./secrets/db_root_password.txt
+    file: ../secrets/db_root_password.txt
+  cert_key:
+    file: ../secrets/cert.key
+  cert:
+    file: ../secrets/cert.pem
+
+network:
+  agruet:

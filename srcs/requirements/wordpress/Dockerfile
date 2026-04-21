@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM debian:bookworm
 
 RUN <<EOF
 apt-get update && apt-get install -y --no-install-recommends \
