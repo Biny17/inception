@@ -1,7 +1,5 @@
 FROM debian:bookworm
 
-COPY ./nginx.conf /etc/nginx
-
 RUN <<EOF
 apt-get update
 apt install -y curl gnupg2 ca-certificates lsb-release debian-archive-keyring
@@ -20,6 +18,8 @@ PREF
 apt update
 apt install -y nginx
 EOF
+
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 443
 

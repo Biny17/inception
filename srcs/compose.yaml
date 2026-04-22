@@ -3,9 +3,9 @@ services:
     networks:
       - agruet
     build: ./requirements/wordpress
-    # depends_on:
-    #   db:
-    #     condition: service_healthy
+    depends_on:
+      db:
+        condition: service_healthy
     env_file: .env
     environment:
       WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
@@ -13,15 +13,9 @@ services:
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
       WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db_password
     secrets:
-      - db_password
+      - db_password.txt
     volumes:
       - wordpress_files:/var/www/html
-    # healthcheck:
-    #   test: ["CMD", "curl", "-f", "http://localhost:9000/ping"]
-    #   interval: 10s
-    #   timeout: 5s
-    #   retries: 5
-    #   start_period: 30s
 
   db:
     networks:
@@ -34,8 +28,8 @@ services:
       MARIADB_PASSWORD_FILE: /run/secrets/db_password
       MARIADB_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
     secrets:
-      - db_password
-      - db_root_password
+      - db_password.txt
+      - db_root_password.txt
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
@@ -53,27 +47,25 @@ services:
       - "8443:443"
     volumes:
       - wordpress_files:/var/www/html
-    # depends_on:
-    #   db:
-    #     condition: service_healthy
-    #   wordpress:
-    #     condition: service_healthy
+    depends_on:
+      db:
+        condition: service_healthy
     secrets:
-      - cert_pem
-      - cert_key
+      - cert.pem
+      - cert.key
 
 volumes:
   db_data:
   wordpress_files:
 
 secrets:
-  db_password:
+  db_password.txt:
     file: ../secrets/db_password.txt
-  db_root_password:
+  db_root_password.txt:
     file: ../secrets/db_root_password.txt
-  cert_key:
+  cert.key:
     file: ../secrets/cert.key
-  cert_pem:
+  cert.pem:
     file: ../secrets/cert.pem
 
 networks:

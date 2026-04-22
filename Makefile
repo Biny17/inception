@@ -3,6 +3,9 @@ all: up
 up: secrets secrets/db_password.txt secrets/db_root_password.txt secrets/cert.key secrets/cert.pem
 	docker compose -f srcs/compose.yaml up
 
+stop:
+	docker compose -f srcs/compose.yaml stop
+
 re: fclean up
 
 fclean: clean
@@ -28,5 +31,5 @@ secrets/cert.pem: secrets secrets/cert.key
 		-sha256 -days 365 -nodes \
 		-subj "/CN=localhost"
 
-.PHONY: up 
+.PHONY: up
 
