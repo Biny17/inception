@@ -1,16 +1,22 @@
 all: up
 
-up: secrets secrets/db_password secrets/db_root_password secrets/cert.key secrets/cert.pem
+up: secrets secrets/db_password.txt secrets/db_root_password.txt secrets/cert.key secrets/cert.pem
 	docker compose -f srcs/compose.yaml up
+
+re: clean secrets secrets/db_password.txt secrets/db_root_password.txt secrets/cert.key secrets/cert.pem
+	docker compose -f srcs/compose.yaml up --build --force-recreate
+
+clean:
+	rm -rf secrets
 
 secrets:
 	mkdir -p secrets
 
-secrets/db_password: secrets
-	openssl rand -base64 32 > secrets/db_password
+secrets/db_password.txt: secrets
+	openssl rand -base64 32 > secrets/db_password.txt
 
-secrets/db_root_password: secrets
-	openssl rand -base64 32 > secrets/db_root_password
+secrets/db_root_password.txt: secrets
+	openssl rand -base64 32 > secrets/db_root_password.txt
 
 secrets/cert.key: secrets
 	openssl genrsa -out secrets/cert.key 4096
