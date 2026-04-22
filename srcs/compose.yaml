@@ -16,6 +16,7 @@ services:
       - db_password.txt
     volumes:
       - wordpress_files:/var/www/html
+    restart: always
 
   db:
     networks:
@@ -38,6 +39,7 @@ services:
           timeout: 5s
           retries: 5
           start_period: 30s
+    restart: always
 
   nginx:
     networks:
@@ -50,9 +52,12 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      wordpress:
+        condition: service_started
     secrets:
       - cert.pem
       - cert.key
+    restart: always
 
 volumes:
   db_data:
