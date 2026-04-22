@@ -6,6 +6,8 @@ apt update
 apt install -y mariadb-server mariadb-client galera-4
 EOF
 
+RUN mkdir -p /run/mysqld && chown mysql:mysql /run/mysqld
+
 HEALTHCHECK --interval=5s --timeout=3s --start-period=10s \
   CMD mariadb-admin ping -h localhost || exit 1
 

@@ -3,8 +3,10 @@ all: up
 up: secrets secrets/db_password.txt secrets/db_root_password.txt secrets/cert.key secrets/cert.pem
 	docker compose -f srcs/compose.yaml up
 
-re: clean secrets secrets/db_password.txt secrets/db_root_password.txt secrets/cert.key secrets/cert.pem
-	docker compose -f srcs/compose.yaml up --build --force-recreate
+re: fclean up
+
+fclean: clean
+	docker compose -f srcs/compose.yaml down --rmi all
 
 clean:
 	rm -rf secrets
