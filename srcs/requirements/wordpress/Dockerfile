@@ -3,6 +3,7 @@ FROM debian:bookworm
 RUN <<EOF
 apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
+    netcat-openbsd \
     php8.2-fpm \
     php8.2-mysql \
     php8.2-gd \
@@ -17,15 +18,20 @@ EOF
 RUN sed -i 's|listen = /run/php/php8.2-fpm.sock|listen = 0.0.0.0:9000|' /etc/php/8.2/fpm/pool.d/www.conf
 
 RUN <<EOF
-mkdir -p /var/www/html
+mkdir -p /usr/src/wordpress
 curl -o /tmp/wordpress.tar.gz -fL "https://wordpress.org/latest.tar.gz" \
-    && tar -xzf /tmp/wordpress.tar.gz -C /var/www/html --strip-components=1 \
+    && tar -xzf /tmp/wordpress.tar.gz -C /usr/src/wordpress --strip-components=1 \
     && rm /tmp/wordpress.tar.gz \
-    && chown -R www-data:www-data /var/www/html
+    && chown -R www-data:www-data /usr/src/wordpress
+curl -o /usr/local/bin/wp -fL "https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar" \
+    && chmod +x /usr/local/bin/wp
 EOF
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 WORKDIR /var/www/html
 
 EXPOSE 9000
 
-CMD ["/usr/sbin/php-fpm8.2", "-F"]
+ENTRYPOINT ["/entrypoint.sh"]
