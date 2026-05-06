@@ -30,6 +30,7 @@ EOF
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+RUN mkdir -p /var/www/html
 WORKDIR /var/www/html
 
 EXPOSE 9000
