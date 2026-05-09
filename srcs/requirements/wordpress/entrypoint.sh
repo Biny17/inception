@@ -2,7 +2,7 @@
 
 SQL_USER=$WORDPRESS_DB_USER
 SQL_PASSWORD=$(cat $WORDPRESS_DB_PASSWORD_FILE)
-WP_ADMIN_USER=$(cat $WORDPRESS_ADMIN_USER_FILE)
+WP_ADMIN=$WORDPRESS_ADMIN
 WP_ADMIN_PASSWORD=$(cat $WORDPRESS_ADMIN_PASSWORD_FILE)
 
 SQL_DATABASE=$WORDPRESS_DB_NAME
@@ -24,7 +24,7 @@ if [ ! -f ./wp-config.php ]; then
     wp core install \
         --url=$DOMAIN_NAME \
         --title="$WP_TITLE" \
-        --admin_user=$WP_ADMIN_USER \
+        --admin_user=$WP_ADMIN \
         --admin_password=$WP_ADMIN_PASSWORD \
         --admin_email=$WP_ADMIN_EMAIL \
         --allow-root

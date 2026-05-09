@@ -5,8 +5,7 @@ up: secrets \
 		secrets/db_root_password.txt \
 		secrets/cert.key \
 		secrets/cert.pem \
-		secrets/wp_password.txt \
-		secrets/wp_admin.txt
+		secrets/wp_password.txt
 	docker compose -f srcs/compose.yaml up
 
 down:
@@ -17,7 +16,7 @@ stop:
 
 re: fclean up
 
-fclean: clean
+fclean: down clean
 	docker compose -f srcs/compose.yaml down --volumes --rmi all --remove-orphans
 
 clean:
