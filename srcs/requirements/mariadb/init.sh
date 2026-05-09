@@ -27,4 +27,4 @@ if [ ! -f /var/lib/mysql/.inception_initialized ]; then
 	touch /var/lib/mysql/.inception_initialized
 fi
 
-exec mysqld_safe
+exec mysqld_safe --bind-address=0.0.0.0
