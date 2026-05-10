@@ -1,4 +1,4 @@
-DOMAIN = tgallet.42.fr 
+DOMAIN = tgallet.42.fr
 HOSTLINE = 127.0.0.1 $(DOMAIN)
 
 all: up
@@ -60,5 +60,13 @@ secrets/wp_password.txt: secrets
 add-host:
 	grep -qF "$(HOSTLINE)" /etc/hosts || echo "$(HOSTLINE)" | sudo tee -a /etc/hosts
 
-.PHONY: up start down stop logs ps build re clean fclean
+data_dirs: /home/$(USER)/data/wordpress /home/$(USER)/data/mariadb
+
+/home/$(USER)/data/wordpress:
+	mkdir -p $@
+
+/home/$(USER)/data/mariadb:
+	mkdir -p $@
+
+.PHONY: up start down stop logs ps build data_dirs re clean fclean
 

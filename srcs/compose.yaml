@@ -71,13 +71,13 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/tgallet/data/mariadb
+      device: /home/${USER}/data/mariadb
   wordpress_files:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/tgallet/data/wordpress
+      device: /home/${USER}/data/wordpress
 
 secrets:
   db_password.txt:
