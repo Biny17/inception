@@ -52,7 +52,7 @@ services:
       - agruet
     build: ./requirements/nginx
     ports:
-      - "8443:443"
+      - "443:443"
     volumes:
       - wordpress_files:/var/www/html
     depends_on:
