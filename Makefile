@@ -11,11 +11,23 @@ up: secrets \
 		secrets/wp_password.txt
 	docker compose -f srcs/compose.yaml up
 
+start:
+	docker compose -f srcs/compose.yaml start
+
 down:
 	docker compose -f srcs/compose.yaml down
 
 stop:
 	docker compose -f srcs/compose.yaml stop
+
+logs:
+	docker compose -f srcs/compose.yaml logs -f
+
+ps:
+	docker compose -f srcs/compose.yaml ps
+
+build:
+	docker compose -f srcs/compose.yaml build
 
 re: fclean up
 
@@ -48,5 +60,5 @@ secrets/wp_password.txt: secrets
 add-host:
 	grep -qF "$(HOSTLINE)" /etc/hosts || echo "$(HOSTLINE)" | sudo tee -a /etc/hosts
 
-.PHONY: up down stop re clean fclean
+.PHONY: up start down stop logs ps build re clean fclean
 

@@ -24,7 +24,7 @@ services:
       - wordpress_files:/var/www/html
     restart: always
 
-  db:
+  mariadb:
     networks:
       - agruet
     build: ./requirements/mariadb
