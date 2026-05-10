@@ -4,7 +4,7 @@ services:
       - agruet
     build: ./requirements/wordpress
     depends_on:
-      db:
+      mariadb:
         condition: service_healthy
     env_file: .env
     environment:
@@ -56,7 +56,7 @@ services:
     volumes:
       - wordpress_files:/var/www/html
     depends_on:
-      db:
+      mariadb:
         condition: service_healthy
       wordpress:
         condition: service_started
