@@ -8,8 +8,10 @@ EOF
 
 RUN mkdir -p /run/mysqld && chown mysql:mysql /run/mysqld
 
+COPY my.cnf /etc/mysql/conf.d/my.cnf
+
 HEALTHCHECK --interval=5s --timeout=3s --start-period=10s \
-  CMD mariadb-admin ping -h localhost || exit 1
+  CMD mariadb-admin ping -h 127.0.0.1 -P 3306 --silent || exit 1
 
 EXPOSE 3306
 

@@ -6,6 +6,12 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /var/www/html/wp-config.php"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
     env_file: .env
     environment:
       WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
@@ -40,7 +46,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-          test: ["CMD-SHELL", "mariadb-admin ping -S /run/mysqld/mysqld.sock --silent"]
+          test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -P 3306 --silent"]
           interval: 10s
           timeout: 5s
           retries: 5
@@ -59,7 +65,7 @@ services:
       mariadb:
         condition: service_healthy
       wordpress:
-        condition: service_started
+        condition: service_healthy
     secrets:
       - cert.pem
       - cert.key
