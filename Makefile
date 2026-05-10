@@ -1,3 +1,6 @@
+DOMAIN = tgallet.42.fr 
+HOSTLINE = 127.0.0.1 $(DOMAIN)
+
 all: up
 
 up: secrets \
@@ -41,6 +44,9 @@ secrets/cert.pem: secrets secrets/cert.key
 
 secrets/wp_password.txt: secrets
 	openssl rand -base64 10 > $@
+
+add-host:
+	grep -qF "$(HOSTLINE)" /etc/hosts || echo "$(HOSTLINE)" | sudo tee -a /etc/hosts
 
 .PHONY: up down stop re clean fclean
 
