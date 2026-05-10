@@ -29,7 +29,7 @@ if [ ! -f ./wp-config.php ]; then
         --admin_email=$WP_ADMIN_EMAIL \
         --allow-root
 
-    wp user create editor editor@$DOMAIN_NAME --role=editor --user_pass=editor42pass --allow-root
+    wp user create editor editor@example.com --role=editor --user_pass=editor42pass --allow-root
 
 fi
 

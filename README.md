@@ -34,7 +34,7 @@ Environment variables are convenient but visible to any process in the container
 
 #### Docker Network vs Host Network
 
-With `network_mode: host`, a container shares the host's network stack — useful for performance, but it removes all network isolation and can expose services unintentionally. This project uses a custom bridge network (`agruet`) so that services can reach each other by name (`db`, `wordpress`, `nginx`) while remaining invisible to the outside world. Only the Nginx container maps a port (`443`) to the host.
+With `network_mode: host`, a container shares the host's network stack — useful for performance, but it removes all network isolation and can expose services unintentionally. This project uses a custom bridge network (`incept_net`) so that services can reach each other by name (`db`, `wordpress`, `nginx`) while remaining invisible to the outside world. Only the Nginx container maps a port (`443`) to the host.
 
 #### Docker Volumes vs Bind Mounts
 
@@ -114,11 +114,10 @@ For full operational details (accessing the admin panel, reading credentials, tr
 
 ### Use of AI
 
-Claude (claude.ai / Claude Code CLI) was used during this project for the following tasks:
+Claude and Gemini was used during this project for the following tasks:
 
-- **Generating boilerplate** — initial `Dockerfile` structures and `entrypoint.sh` / `init.sh` scripts were drafted with AI assistance and then reviewed and adjusted.
-- **Debugging** — when services failed to start, AI helped interpret Docker logs and suggest fixes (e.g., PHP-FPM socket vs TCP listen address, MariaDB healthcheck command).
+- **Information gathering** — Questions about docker, debian, env, querying the docs of nginx/mariadb/wordpress and other things
+- **Debugging** — When services failed to start, AI helped interpret Docker logs, understanding what is wrong and suggest fixes.
 - **Writing documentation** — `README.md`, `USER_DOC.md`, and `DEV_DOC.md` were written with AI assistance based on the actual project structure.
-- **Design questions** — AI was consulted to compare trade-offs (volumes vs bind mounts, secrets vs environment variables) and the explanations in this README are informed by those conversations.
+- **Design questions** — AI was consulted to compare trade-offs and the explanations in this README are informed by those conversations.
 
-All AI-generated content was verified against the official documentation and tested against the running stack.

@@ -57,7 +57,7 @@
 
 ```
                  ┌─────────────────────────────────────────┐
-                 │            Docker Network: agruet       │
+                 │            Docker Network: incept_net       │
                  │                                         │
   HTTPS:443      │   ┌──────────┐     FastCGI:9000         │
  ──────────────► │   │  Nginx   │ ──────────▼              │
@@ -398,7 +398,7 @@ make re
    redis:
      build: ./requirements/redis
      networks:
-       - agruet
+       - incept_net
      restart: unless-stopped
    ```
 
@@ -509,7 +509,7 @@ make fclean
 
 ## 🌐 Networking
 
-All services share the custom bridge network `agruet`. Services communicate by their **Compose service name** (Docker's built-in DNS):
+All services share the custom bridge network `incept_net`. Services communicate by their **Compose service name** (Docker's built-in DNS):
 
 | From | To | Address |
 |------|----|---------|

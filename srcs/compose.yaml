@@ -1,7 +1,7 @@
 services:
   wordpress:
     networks:
-      - agruet
+      - incept_net
     build: ./requirements/wordpress
     depends_on:
       mariadb:
@@ -26,7 +26,7 @@ services:
 
   mariadb:
     networks:
-      - agruet
+      - incept_net
     build: ./requirements/mariadb
     env_file: .env
     environment:
@@ -49,7 +49,7 @@ services:
 
   nginx:
     networks:
-      - agruet
+      - incept_net
     build: ./requirements/nginx
     ports:
       - "443:443"
@@ -67,7 +67,17 @@ services:
 
 volumes:
   db_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/tgallet/data/wordpress
   wordpress_files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/tgallet/data/wordpress
 
 secrets:
   db_password.txt:
@@ -82,5 +92,5 @@ secrets:
     file: ../secrets/wp_password.txt
 
 networks:
-  agruet:
+  incept_net:
 

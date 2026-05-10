@@ -10,7 +10,7 @@ The Inception stack runs three containerized services that together form a compl
 | **WordPress** | PHP-FPM 8.2 + WP-CLI | Application server — renders pages and exposes the admin panel |
 | **MariaDB** | MariaDB (Debian Bookworm) | Database — stores all WordPress content, users, and settings |
 
-All three services communicate on a private Docker bridge network (`agruet`). Only port **443** (HTTPS) is exposed to the host.
+All three services communicate on a private Docker bridge network (`incept_net`). Only port **443** (HTTPS) is exposed to the host.
 
 ---
 
