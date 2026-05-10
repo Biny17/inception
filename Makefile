@@ -8,7 +8,8 @@ up: secrets \
 		secrets/db_root_password.txt \
 		secrets/cert.key \
 		secrets/cert.pem \
-		secrets/wp_password.txt
+		secrets/wp_password.txt \
+		data_dirs
 	docker compose -f srcs/compose.yaml up
 
 start:
@@ -33,6 +34,8 @@ re: fclean up
 
 fclean: down clean
 	docker compose -f srcs/compose.yaml down --volumes --rmi all --remove-orphans
+	sudo rm -rf /home/$(USER)/data/wordpress
+	sudo rm -rf /home/$(USER)/data/mariadb
 
 clean:
 	rm -rf secrets
