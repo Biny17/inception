@@ -35,4 +35,6 @@ fi
 
 chmod -R 755 /var/www/html
 
+echo "Wordpress initialized"
+
 exec php-fpm8.2 -F
