@@ -1,7 +1,3 @@
 srcs/.env
 secrets/
 */secrets/
-.claude
-edouard.txt
-eval.txt
-.gitignore
