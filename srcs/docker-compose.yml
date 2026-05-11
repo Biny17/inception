@@ -46,7 +46,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-          test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -P 3306 --silent"]
+          test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -P 3307 --silent"]
           interval: 10s
           timeout: 5s
           retries: 5
@@ -58,7 +58,7 @@ services:
       - incept_net
     build: ./requirements/nginx
     ports:
-      - "443:443"
+      - "8080:8080"
     volumes:
       - wordpress_files:/var/www/html
     depends_on:

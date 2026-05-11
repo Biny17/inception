@@ -16,7 +16,7 @@ apt-get update && apt-get install -y --no-install-recommends \
 rm -rf /var/lib/apt/lists/*
 EOF
 
-RUN sed -i 's|listen = /run/php/php8.2-fpm.sock|listen = 0.0.0.0:9000|' /etc/php/8.2/fpm/pool.d/www.conf
+RUN sed -i 's|listen = /run/php/php8.2-fpm.sock|listen = 0.0.0.0:9001|' /etc/php/8.2/fpm/pool.d/www.conf
 
 RUN <<EOF
 mkdir -p /usr/src/wordpress
@@ -34,6 +34,6 @@ RUN chmod +x /entrypoint.sh
 RUN mkdir -p /var/www/html
 WORKDIR /var/www/html
 
-EXPOSE 9000
+EXPOSE 9001
 
 ENTRYPOINT ["/entrypoint.sh"]
