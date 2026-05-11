@@ -7,11 +7,17 @@ WP_ADMIN_PASSWORD=$(cat $WORDPRESS_ADMIN_PASSWORD_FILE)
 
 SQL_DATABASE=$WORDPRESS_DB_NAME
 
+echo "Waiting for db to be ready..."
+
 while ! nc -z $WORDPRESS_DB_HOST 3307; do
-    sleep 1
+  echo "Database not ready..."  
+  sleep 2
 done
 
+echo "DB responded !"
+
 if [ ! -f ./wp-config.php ]; then
+    echo "Wordpress config creation"
     cp -a /usr/src/wordpress/. .
 
     wp config create \
