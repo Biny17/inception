@@ -11,6 +11,7 @@ apt-get update && apt-get install -y --no-install-recommends \
     php8.2-mbstring \
     php8.2-xml \
     php8.2-zip \
+    ssmtp \
     curl
 rm -rf /var/lib/apt/lists/*
 EOF
