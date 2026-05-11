@@ -10,30 +10,30 @@ up: secrets \
 		secrets/cert.pem \
 		secrets/wp_password.txt \
 		data_dirs
-	docker compose -f srcs/compose.yaml up
+	docker compose -f srcs/docker-compose.yml up
 
 start:
-	docker compose -f srcs/compose.yaml start
+	docker compose -f srcs/docker-compose.yml start
 
 down:
-	docker compose -f srcs/compose.yaml down
+	docker compose -f srcs/docker-compose.yml down
 
 stop:
-	docker compose -f srcs/compose.yaml stop
+	docker compose -f srcs/docker-compose.yml stop
 
 logs:
-	docker compose -f srcs/compose.yaml logs -f
+	docker compose -f srcs/docker-compose.yml logs -f
 
 ps:
-	docker compose -f srcs/compose.yaml ps
+	docker compose -f srcs/docker-compose.yml ps
 
 build:
-	docker compose -f srcs/compose.yaml build
+	docker compose -f srcs/docker-compose.yml build
 
 re: fclean up
 
 fclean: down clean
-	docker compose -f srcs/compose.yaml down --volumes --rmi all --remove-orphans
+	docker compose -f srcs/docker-compose.yml down --volumes --rmi all --remove-orphans
 	sudo rm -rf /home/$(USER)/data/wordpress
 	sudo rm -rf /home/$(USER)/data/mariadb
 

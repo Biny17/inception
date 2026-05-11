@@ -135,7 +135,7 @@ Inception/
 └── 📁 srcs/
     ├── 📄 .env                   ← Your local config (gitignored)
     ├── 📄 .env.example           ← Template to copy
-    ├── 📄 compose.yaml           ← Docker Compose orchestration
+    ├── 📄 docker-compose.yml     ← Docker Compose orchestration
     │
     └── 📁 requirements/
         ├── 🍇 nginx/
@@ -393,7 +393,7 @@ make re
    CMD ["redis-server", "/etc/redis/redis.conf"]
    ```
 
-3. Add the service to `srcs/compose.yaml`:
+3. Add the service to `srcs/docker-compose.yml`:
    ```yaml
    redis:
      build: ./requirements/redis
@@ -443,7 +443,7 @@ After any nginx.conf change, rebuild the image:
 ```bash
 make re
 # or just restart nginx if you didn't change the Dockerfile:
-docker compose -f srcs/compose.yaml restart nginx
+docker compose -f srcs/docker-compose.yml restart nginx
 ```
 
 ---
@@ -520,7 +520,7 @@ Only Nginx exposes a port to the host (`443:443`). WordPress and MariaDB are not
 
 **To expose MariaDB to the host temporarily** (debugging only!):
 ```yaml
-# In compose.yaml, under db:
+# In docker-compose.yml, under db:
 ports:
   - "3306:3306"
 ```
@@ -547,7 +547,7 @@ healthcheck:
 
 Check health status:
 ```bash
-docker compose -f srcs/compose.yaml ps
+docker compose -f srcs/docker-compose.yml ps
 # Look for (healthy) in the STATUS column
 ```
 
@@ -557,17 +557,17 @@ docker compose -f srcs/compose.yaml ps
 
 **🍊 Containers keep restarting?**
 ```bash
-docker compose -f srcs/compose.yaml logs <service>
+docker compose -f srcs/docker-compose.yml logs <service>
 ```
 
 **🍋 WordPress can't connect to the database?**
-- Check MariaDB is healthy: `docker compose -f srcs/compose.yaml ps`
+- Check MariaDB is healthy: `docker compose -f srcs/docker-compose.yml ps`
 - Verify `MARIADB_USER` in `.env` matches what `init.sh` creates
 - Make sure `WORDPRESS_DB_HOST=mariadb` (the service name, not an IP)
 
 **🍇 Nginx 502 Bad Gateway?**
 - WordPress container may still be installing — wait ~30 seconds
-- Check WordPress logs: `docker compose -f srcs/compose.yaml logs wordpress`
+- Check WordPress logs: `docker compose -f srcs/docker-compose.yml logs wordpress`
 
 **🍈 SSL certificate warning in browser?**
 - Expected for self-signed certs. Click "Advanced" → "Accept the risk"
@@ -575,7 +575,7 @@ docker compose -f srcs/compose.yaml logs <service>
 
 **🍉 Changes to .env not applying?**
 - For WordPress/MariaDB first-boot config: `make fclean && make`
-- For Nginx: `docker compose -f srcs/compose.yaml restart nginx`
+- For Nginx: `docker compose -f srcs/docker-compose.yml restart nginx`
 
 **🔑 Forgot the WordPress admin password?**
 ```bash

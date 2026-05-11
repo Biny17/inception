@@ -108,15 +108,15 @@ Press `Ctrl+C` to exit. Errors will appear in red in most terminals.
 ### Individual service logs
 
 ```bash
-docker compose -f srcs/compose.yaml logs nginx
-docker compose -f srcs/compose.yaml logs wordpress
-docker compose -f srcs/compose.yaml logs mariadb
+docker compose -f srcs/docker-compose.yml logs nginx
+docker compose -f srcs/docker-compose.yml logs wordpress
+docker compose -f srcs/docker-compose.yml logs mariadb
 ```
 
 ### Database connectivity test
 
 ```bash
-docker compose -f srcs/compose.yaml exec db mariadb-admin ping -S /run/mysqld/mysqld.sock
+docker compose -f srcs/docker-compose.yml exec db mariadb-admin ping -S /run/mysqld/mysqld.sock
 ```
 
 Expected output: `mysqld is alive`
